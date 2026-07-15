@@ -563,11 +563,12 @@ let sdt = '';
 let adt = '';
 const ADMIN_PHONE = '9047984396';
 
-window.onload = function(){
+window.onload = async function(){
     updateDateTime();
     setInterval(updateDateTime, 1000);
     loadDark();
-    loadNote();
+    updateViews();
+    await loadNote();
 }
 
 function updateDateTime(){
@@ -609,7 +610,7 @@ function backHome(){
     document.getElementById('user').value=''; document.getElementById('pass').value='';
 }
 
-function doLogin(){
+async function doLogin(){
     let t=document.getElementById('utype').value;
     let u=document.getElementById('user').value;
     let p=document.getElementById('pass').value;
@@ -617,13 +618,13 @@ function doLogin(){
     if(t=='admin' && u=='kkdgms' && p==ap){
         document.getElementById('login').style.display='none';
         document.getElementById('admin').style.display='block';
-        updateViews(); loadNote(); document.getElementById('note').value=getNote();
-        pickClass('class_9');
+        await loadNote(); document.getElementById('note').value= await getNote();
+        await pickClass('class_9');
     }
     else if(t=='student' && u=='kkdgms' && p=='2027'){
         document.getElementById('login').style.display='none';
         document.getElementById('student').style.display='block';
-        sClass('class_9');
+        await sClass('class_9');
     }
     else{ alert('Login Failed!'); }
 }
@@ -668,9 +669,14 @@ function chgPass(){
     cancelPassChange();
 }
 
-function getNote(){return localStorage.getItem('note')||'';}
-function loadNote(){
-    let n=getNote();
+async function getNote(){
+    try{
+        let r = await window.storage.get('notification', true);
+        return r ? r.value : '';
+    }catch(e){ return ''; }
+}
+async function loadNote(){
+    let n = await getNote();
     if(n && n.trim()!=''){
         document.getElementById('mtext').innerText=n;
         document.getElementById('marquee').classList.add('show');
@@ -678,99 +684,126 @@ function loadNote(){
         document.getElementById('marquee').classList.remove('show');
     }
 }
-function saveNote(){let n=document.getElementById('note').value; localStorage.setItem('note',n); loadNote(); alert('Saved');}
-function clearNote(){localStorage.removeItem('note'); document.getElementById('note').value=''; loadNote();}
+async function saveNote(){
+    let n=document.getElementById('note').value;
+    try{
+        await window.storage.set('notification', n, true);
+        await loadNote();
+        alert('Saved — this will now show on every device.');
+    }catch(e){ alert('Failed to save. Please try again.'); }
+}
+async function clearNote(){
+    try{ await window.storage.delete('notification', true); }catch(e){}
+    document.getElementById('note').value='';
+    await loadNote();
+}
 
-function getD(){return JSON.parse(localStorage.getItem('data'))||{};}
-function saveD(d){localStorage.setItem('data',JSON.stringify(d));}
+async function getD(){
+    try{
+        let r = await window.storage.get('class-links', true);
+        return r ? JSON.parse(r.value) : {};
+    }catch(e){ return {}; }
+}
+async function saveD(d){
+    try{
+        let ok = await window.storage.set('class-links', JSON.stringify(d), true);
+        if(!ok){ alert('Failed to save link. Please try again.'); }
+    }catch(e){ alert('Failed to save link. Please try again.'); }
+}
 
 function formatDate(dateStr){
     let parts = dateStr.split('-');
     return `${parts[2]}-${parts[1]}-${parts[0]}`;
 }
 
-function pickClass(c){
+async function pickClass(c){
     cls=c; adt='';
     ['9','10','11','12'].forEach(i=>document.getElementById('b'+i).classList.remove('active'));
     document.getElementById('b'+c.split('_')[1]).classList.add('active');
     document.getElementById('cname').innerText=c.replace('_',' ');
     document.getElementById('calDiv').style.display='block';
-    makeCal();
+    await makeCal();
 }
-function makeCal(){
-    let cal=document.getElementById('cal'); cal.innerHTML='';
+async function makeCal(){
+    let cal=document.getElementById('cal'); cal.innerHTML='<div style="grid-column:1/-1; text-align:center; padding:10px;">Loading…</div>';
     let mn=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     document.getElementById('my').innerText=mn[m]+' '+y;
-    'Sun Mon Tue Wed Thu Fri Sat'.split(' ').forEach(d=>cal.innerHTML+=`<div class="week">${d}</div>`);
-    let f=new Date(y,m,1).getDay(); let days=new Date(y,m+1,0).getDate(); let data=getD();
-    for(let i=0;i<f;i++) cal.innerHTML+='<div></div>';
+    let data = await getD();
+    let html='';
+    'Sun Mon Tue Wed Thu Fri Sat'.split(' ').forEach(d=>html+=`<div class="week">${d}</div>`);
+    let f=new Date(y,m,1).getDay(); let days=new Date(y,m+1,0).getDate();
+    for(let i=0;i<f;i++) html+='<div></div>';
     for(let i=1;i<=days;i++){
         let key=`${y}-${m+1}-${i}`;
         let c=data[cls]&&data[cls][key]?'has':'';
         let selected = (adt === key)? 'selected' : '';
         let sun=new Date(y,m,i).getDay()==0?'sun':'';
-        cal.innerHTML+=`<div class="day ${c} ${selected} ${sun}" style="animation-delay:${i*0.01}s" onclick="pickDate(${i})">${i}</div>`;
+        html+=`<div class="day ${c} ${selected} ${sun}" style="animation-delay:${i*0.01}s" onclick="pickDate(${i})">${i}</div>`;
     }
+    cal.innerHTML = html;
 }
-function pm(){m--; if(m<0){m=11;y--;} adt=''; makeCal();}
-function nm(){m++; if(m>11){m=0;y++;} adt=''; makeCal();}
-function pickDate(d){
+async function pm(){m--; if(m<0){m=11;y--;} adt=''; await makeCal();}
+async function nm(){m++; if(m>11){m=0;y++;} adt=''; await makeCal();}
+async function pickDate(d){
     dt=`${y}-${m+1}-${d}`;
     adt = dt;
-    makeCal();
+    await makeCal();
     document.getElementById('d').innerText=formatDate(dt);
     document.getElementById('linkDiv').style.display='block';
-    loadL();
+    await loadL();
 }
 function backCal(){document.getElementById('linkDiv').style.display='none';}
 
-function addL(){
+async function addL(){
     let h=document.getElementById('ht').value; let u=document.getElementById('lu').value;
     if(!h){alert('Enter Topic');return;}
-    let data=getD(); if(!data[cls]) data[cls]={}; if(!data[cls][dt]) data[cls][dt]=[];
-    data[cls][dt].push({h:h,u:u}); saveD(data);
+    let data= await getD(); if(!data[cls]) data[cls]={}; if(!data[cls][dt]) data[cls][dt]=[];
+    data[cls][dt].push({h:h,u:u});
+    await saveD(data);
     document.getElementById('ht').value=''; document.getElementById('lu').value='';
-    loadL(); makeCal();
+    await loadL(); await makeCal();
 }
-function loadL(){
-    let data=getD(); let links=data[cls]?.[dt]||[]; let html='';
+async function loadL(){
+    let data= await getD(); let links=data[cls]?.[dt]||[]; let html='';
     links.forEach((l,i)=>{html+=`<div class="link">${i+1}. ${l.h}<br><a href="${l.u}" target="_blank">${l.u}</a> <button onclick="delL(${i})" style="float:right;background:red;padding:5px;width:auto;">X</button></div>`;});
     document.getElementById('llist').innerHTML=html||'No links';
 }
-function delL(i){let data=getD(); data[cls][dt].splice(i,1); saveD(data); loadL(); makeCal();}
+async function delL(i){let data= await getD(); data[cls][dt].splice(i,1); await saveD(data); await loadL(); await makeCal();}
 
-// FIXED STUDENT FUNCTIONS - NOW READS data[scls][key]
-function sClass(c){
+// STUDENT FUNCTIONS - read from the same shared data[scls][key]
+async function sClass(c){
     scls=c; sdt='';
     ['sb9','sb10','sb11','sb12'].forEach(i=>document.getElementById(i).classList.remove('active'));
     document.getElementById('sb'+c.split('_')[1]).classList.add('active');
     document.getElementById('scname').innerText=c.replace('_',' ');
     document.getElementById('scalDiv').style.display='block';
-    makeSCal();
+    await makeSCal();
 }
-function makeSCal(){
-    let cal=document.getElementById('scal'); cal.innerHTML='';
+async function makeSCal(){
+    let cal=document.getElementById('scal'); cal.innerHTML='<div style="grid-column:1/-1; text-align:center; padding:10px;">Loading…</div>';
     let mn=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     document.getElementById('smy').innerText=mn[sm]+' '+sy;
-    'Sun Mon Tue Wed Thu Fri Sat'.split(' ').forEach(d=>cal.innerHTML+=`<div class="week">${d}</div>`);
-    let f=new Date(sy,sm,1).getDay(); let days=new Date(sy,sm+1,0).getDate(); let data=getD();
-    for(let i=0;i<f;i++) cal.innerHTML+='<div></div>';
+    let data = await getD();
+    let html='';
+    'Sun Mon Tue Wed Thu Fri Sat'.split(' ').forEach(d=>html+=`<div class="week">${d}</div>`);
+    let f=new Date(sy,sm,1).getDay(); let days=new Date(sy,sm+1,0).getDate();
+    for(let i=0;i<f;i++) html+='<div></div>';
     for(let i=1;i<=days;i++){
         let key=`${sy}-${sm+1}-${i}`;
-        // FIX 1: Check data[scls][key]
         let c=data&&data[scls]&&data[scls][key]?'has':'';
         let selected = (sdt === key)? 'selected' : '';
         let sun=new Date(sy,sm,i).getDay()==0?'sun':'';
-        cal.innerHTML+=`<div class="day ${c} ${selected} ${sun}" style="animation-delay:${i*0.01}s" onclick="showSL(${i})">${i}</div>`;
+        html+=`<div class="day ${c} ${selected} ${sun}" style="animation-delay:${i*0.01}s" onclick="showSL(${i})">${i}</div>`;
     }
+    cal.innerHTML = html;
 }
-function spm(){sm--; if(sm<0){sm=11;sy--;} sdt=''; makeSCal();}
-function snm(){sm++; if(sm>11){sm=0;sy++;} sdt=''; makeSCal();}
-function showSL(d){
+async function spm(){sm--; if(sm<0){sm=11;sy--;} sdt=''; await makeSCal();}
+async function snm(){sm++; if(sm>11){sm=0;sy++;} sdt=''; await makeSCal();}
+async function showSL(d){
     let key=`${sy}-${sm+1}-${d}`;
     sdt = key;
-    makeSCal();
-    let data=getD();
+    await makeSCal();
+    let data= await getD();
     let links=data?.[scls]?.[key]||[];
     let html=`<h4>Links for ${formatDate(key)}</h4>`;
     links.forEach(l=>{html+=`<div class="link"><b>${l.h}</b><br><a href="${l.u}" target="_blank">${l.u}</a></div>`;});
