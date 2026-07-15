@@ -4,446 +4,78 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KKDGMS School Website</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ============ DESIGN TOKENS ============ */
 :root {
-    /* page */
-    --bg1: #0F5C57;         /* deep teal  */
-    --bg2: #123B5E;         /* deep indigo-navy */
-    --card: #FBF7EE;        /* warm paper cream */
-    --card-alt: #F1EADA;    /* slightly deeper paper for nested panels */
-    --text: #22303A;        /* charcoal ink */
-    --text-soft: #5B6B72;   /* muted ink */
-    --border: #E1D7C0;
-
-    /* brand accents */
-    --gold: #E8A33D;
-    --gold-deep: #C97F1E;
-    --vermilion: #C1432E;
-    --vermilion-deep: #96301F;
-    --teal: #0F5C57;
-    --indigo: #123B5E;
-
-    /* header */
-    --header-1: var(--vermilion);
-    --header-2: var(--gold-deep);
-
-    /* datetime bar */
-    --dt-1: #12707A;
-    --dt-2: #0A4F58;
-    --dt-time: #FFE18C;
-
-    /* marquee */
-    --marquee-1: var(--gold);
-    --marquee-2: var(--vermilion);
-    --marquee-text: #2A1400;
-
-    /* login boxes */
-    --box1-bg1: #E7F2F3; --box1-bg2: #C9E4E6; --box1-border: var(--teal); --box1-text: #0B3B39;
-    --box2-bg1: #FBEFDD; --box2-bg2: #F4DCB0; --box2-border: var(--gold-deep); --box2-text: #5A3A08;
-
-    /* home quick links */
-    --staff-bg1: #F1E4F7; --staff-bg2: #E0C7EE; --staff-border: #8E4FAF; --staff-text: #401255;
-    --exam-bg1: #FDE7DE; --exam-bg2: #FBCBB6; --exam-border: var(--vermilion); --exam-text: #5C1B0D;
-
-    /* stat cards */
-    --stat-today-1: var(--dt-1); --stat-today-2: var(--dt-2);
-    --stat-total-1: var(--vermilion); --stat-total-2: var(--vermilion-deep);
-
-    /* class pills */
-    --c9: #E08A2B; --c10: #1F7AC2; --c11: #2E9A52; --c12: #8E4FAF;
-
-    /* tabs */
-    --tab-dash-1: #1F7AC2; --tab-dash-2: #124C82;
-    --tab-set-1: #E08A2B; --tab-set-2: #A85F10;
-
-    /* calendar */
-    --day-bg: #F1EADA; --day-text: #22303A;
-    --day-has-bg: #2E9A52; --day-has-text: #ffffff;
-    --day-sun-bg: #F6D3CE; --day-sun-text: #7A2314;
-    --day-selected-bg: #1F7AC2; --day-selected-text: #ffffff; --day-selected-border: #123B5E;
-    --week-bg: var(--vermilion); --week-text: #ffffff;
-
-    /* links list (topic links) */
-    --link-bg: #FBEFDD; --link-border: var(--vermilion); --link-text: #3A2205;
-
-    /* login form / settings panel */
-    --panel-bg: var(--card-alt); --panel-border: var(--vermilion);
-
-    /* inputs & buttons */
-    --input-bg: #ffffff; --input-border: #C9BEA4; --input-text: var(--text);
-    --btn-1: var(--teal); --btn-2: #0A4F58; --btn-text: #ffffff;
-    --btn-muted-1: #9AA5AA; --btn-muted-2: #75808A;
-    --btn-danger-1: #D9463A; --btn-danger-2: #A62E24;
-
-    --footer-bg: #1B2530; --footer-text: #F1EADA;
-
-    --shadow-soft: rgba(15, 30, 35, 0.18);
-    --shadow-strong: rgba(15, 30, 35, 0.30);
+    --bg1: #667eea; --bg2: #764ba2; --card: white; --text: #333;
 }
-
 body.dark {
-    --bg1: #0A1520;
-    --bg2: #060D16;
-    --card: #16222E;
-    --card-alt: #1C2B3A;
-    --text: #E9EEF2;
-    --text-soft: #9DAEBA;
-    --border: #2B3D4D;
-
-    --gold: #F0B45C;
-    --gold-deep: #D89A3E;
-    --vermilion: #E2695A;
-    --vermilion-deep: #C24F41;
-
-    --header-1: #7A2A20;
-    --header-2: #8A5A18;
-
-    --dt-1: #0E4A52;
-    --dt-2: #082E34;
-    --dt-time: #FFE18C;
-
-    --marquee-1: #8A5A18;
-    --marquee-2: #7A2A20;
-    --marquee-text: #FFEFD2;
-
-    --box1-bg1: #17303A; --box1-bg2: #123039; --box1-border: #2C8C86; --box1-text: #CDEEEA;
-    --box2-bg1: #332616; --box2-bg2: #2C2011; --box2-border: #D89A3E; --box2-text: #F4DDA8;
-
-    --staff-bg1: #2A1E33; --staff-bg2: #23182B; --staff-border: #A972C6; --staff-text: #ECD9F5;
-    --exam-bg1: #33201A; --exam-bg2: #2B1912; --exam-border: #E2695A; --exam-text: #F6D8CF;
-
-    --stat-today-1: var(--dt-1); --stat-today-2: var(--dt-2);
-    --stat-total-1: #8A342A; --stat-total-2: #5E241D;
-
-    --c9: #B5661C; --c10: #1B5A8C; --c11: #256E3B; --c12: #6C3A87;
-
-    --tab-dash-1: #1B5A8C; --tab-dash-2: #0F3A5C;
-    --tab-set-1: #B5661C; --tab-set-2: #7A470F;
-
-    --day-bg: #1C2B3A; --day-text: #E9EEF2;
-    --day-has-bg: #256E3B; --day-has-text: #EAFBF0;
-    --day-sun-bg: #402019; --day-sun-text: #F5B9AC;
-    --day-selected-bg: #1B5A8C; --day-selected-text: #ffffff; --day-selected-border: #0F3A5C;
-    --week-bg: #7A2A20; --week-text: #FFEFD2;
-
-    --link-bg: #2A2013; --link-border: #E2695A; --link-text: #F4E1C6;
-
-    --panel-bg: var(--card-alt); --panel-border: #E2695A;
-
-    --input-bg: #101B26; --input-border: #33475A; --input-text: var(--text);
-    --btn-1: #1D6B64; --btn-2: #123B37; --btn-text: #ffffff;
-    --btn-muted-1: #4A5A65; --btn-muted-2: #333F48;
-    --btn-danger-1: #A9392D; --btn-danger-2: #7A2A21;
-
-    --footer-bg: #060D16; --footer-text: #C9D6DE;
-
-    --shadow-soft: rgba(0, 0, 0, 0.45);
-    --shadow-strong: rgba(0, 0, 0, 0.6);
+    --bg1: #1a1a2e; --bg2: #16213e; --card: #2a2a3e; --text: #eee;
 }
-
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
-}
-
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html { scroll-behavior: smooth; }
-html, body { overflow-x: hidden; width: 100%; -webkit-text-size-adjust: 100%; }
-body {
-    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-    margin: 0; padding: clamp(6px, 2.5vw, 16px);
-    background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
-    background-attachment: fixed;
-    color: var(--text);
-    transition: background 0.5s ease, color 0.4s ease;
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-.container {
-    max-width: 1000px; margin: 0 auto;
-    background: var(--card);
-    padding: 0 clamp(12px, 4vw, 26px) clamp(72px, 12vw, 84px) clamp(12px, 4vw, 26px);
-    border-radius: clamp(10px, 3vw, 18px);
-    min-height: 90vh;
-    box-shadow: 0 20px 50px var(--shadow-strong);
-    position: relative;
-    animation: containerIn 0.6s ease both;
-    transition: background 0.4s ease;
-    width: 100%;
-}
-@media (min-width: 1200px) {
-    .container { max-width: 1080px; }
-}
-@keyframes containerIn {
-    from { opacity: 0; transform: translateY(16px) scale(0.99); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.header {
-    background: linear-gradient(100deg, var(--header-1), var(--header-2));
-    background-size: 200% 200%;
-    animation: headerFlow 10s ease infinite;
-    color: #fff;
-    padding: clamp(18px, 5vw, 26px) clamp(46px, 10vw, 70px) clamp(26px, 6vw, 34px) clamp(14px, 4vw, 20px);
-    text-align: center;
-    border-radius: 0 0 0 0;
-    margin: 0 clamp(-12px, -4vw, -26px);
-    box-shadow: 0 8px 24px var(--shadow-soft);
-    position: relative;
-    overflow: hidden;
-}
-@keyframes headerFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-.header h1 {
-    margin: 0; font-family: 'Poppins', sans-serif; font-weight: 800;
-    font-size: clamp(22px, 6vw, 34px); letter-spacing: clamp(1px, 0.6vw, 3px);
-    text-shadow: 0 3px 10px rgba(0,0,0,0.25);
-    word-break: break-word;
-}
-.header p { margin: 6px 0 0 0; opacity: 0.95; font-weight: 500; letter-spacing: 1px; font-size: clamp(12px, 3vw, 15px); }
-.wave { display: block; margin: 0 clamp(-12px, -4vw, -26px); line-height: 0; }
-.wave svg { width: 100%; height: clamp(16px, 4vw, 26px); display: block; }
-.wave path { fill: var(--card); transition: fill 0.4s ease; }
-
-.dark-btn {
-    position: absolute; right: clamp(8px, 3vw, 15px); top: clamp(8px, 3vw, 15px);
-    background: rgba(255,255,255,0.18);
-    border: 1px solid rgba(255,255,255,0.35);
-    color: #fff;
-    width: 40px; height: 40px;
-    display: flex; align-items: center; justify-content: center;
-    padding: 0; border-radius: 50%;
-    font-size: 18px; cursor: pointer;
-    transition: transform 0.4s ease, background 0.3s ease;
-    flex-shrink: 0;
-}
-.dark-btn:hover { transform: rotate(20deg) scale(1.1); background: rgba(255,255,255,0.3); }
-
-.top-datetime {
-    background: linear-gradient(90deg, var(--dt-1), var(--dt-2));
-    color: #fff; padding: clamp(8px, 2.5vw, 10px); text-align: center;
-    border-radius: 10px; margin: 14px 0 15px 0;
-    box-shadow: 0 4px 14px var(--shadow-soft);
-}
-.top-datetime.date { font-size: clamp(11px, 3.2vw, 14px); font-weight: 600; }
-.top-datetime.time { font-size: clamp(13px, 3.6vw, 17px); font-weight: 900; letter-spacing: 1px; color: var(--dt-time); }
-
-.marquee {
-    background: linear-gradient(90deg, var(--marquee-1), var(--marquee-2));
-    color: var(--marquee-text);
-    padding: clamp(9px, 3vw, 12px); font-weight: 700; border-radius: 8px; margin-bottom: 15px;
-    display: none; overflow: hidden; white-space: nowrap;
-    box-shadow: 0 2px 10px var(--shadow-soft);
-    border: 1px solid rgba(255,255,255,0.25);
-    font-size: clamp(12px, 3.2vw, 15px);
-}
-.marquee.show { display: block; animation: marqueeGlow 3s ease-in-out infinite; }
+* { box-sizing: border-box; }
+body { font-family: 'Segoe UI', Arial; margin: 0; padding: 10px; background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%); color: var(--text); }
+.container { max-width: 1000px; margin: 0 auto; background: var(--card); padding: 15px; border-radius: 15px; min-height: 90vh; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; padding-bottom: 70px; }
+.header { background: linear-gradient(90deg, #E91E63, #FF5722); color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; }
+.header h1 { margin: 0; font-size: 32px; letter-spacing: 2px; }
+.dark-btn { position: absolute; right: 15px; top: 15px; background: rgba(255,255,255,0.2); border: none; padding: 8px 12px; border-radius: 50%; font-size: 20px; cursor: pointer; }
+.top-datetime { background: linear-gradient(90deg, #00BCD4, #0097A7); color: white; padding: 8px; text-align: center; border-radius: 0 0 10px 10px; margin-bottom: 15px; }
+.marquee { background: linear-gradient(90deg, #FF9800, #F57C00); color: white; padding: 12px; font-weight: bold; border-radius: 8px; margin-bottom: 15px; display: none; overflow: hidden; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.marquee.show { display: block; }
 .marquee span { display: inline-block; padding-left: 100%; animation: scroll 25s linear infinite; }
 @keyframes scroll { 0% { transform: translateX(0%); } 100% { transform: translateX(-100%); } }
-@keyframes marqueeGlow {
-    0%, 100% { box-shadow: 0 2px 10px var(--shadow-soft); }
-    50% { box-shadow: 0 2px 18px var(--shadow-strong); }
-}
-
-h2, h3, h4 { font-family: 'Poppins', sans-serif; }
-
-.login-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 3vw, 15px); }
-.box {
-    padding: clamp(16px, 5vw, 30px); border-radius: 14px; text-align: center; cursor: pointer;
-    font-size: clamp(14px, 4vw, 18px); font-weight: 700;
-    box-shadow: 0 6px 16px var(--shadow-soft);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: popIn 0.5s ease both;
-}
-.login-grid .box:nth-child(2) { animation-delay: 0.08s; }
-.box:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 26px var(--shadow-strong); }
-.box1 { background: linear-gradient(135deg, var(--box1-bg1), var(--box1-bg2)); border: 3px solid var(--box1-border); color: var(--box1-text); }
-.box2 { background: linear-gradient(135deg, var(--box2-bg1), var(--box2-bg2)); border: 3px solid var(--box2-border); color: var(--box2-text); }
-
-@keyframes popIn {
-    from { opacity: 0; transform: translateY(14px) scale(0.96); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.home-links { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 3vw, 15px); margin-top: 20px; }
-.home-link {
-    padding: clamp(14px, 4.5vw, 25px); border-radius: 14px; text-align: center; text-decoration: none;
-    font-size: clamp(13px, 3.6vw, 17px); font-weight: 700;
-    box-shadow: 0 6px 16px var(--shadow-soft);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: popIn 0.5s ease both;
-}
-.home-links .home-link:nth-child(2) { animation-delay: 0.08s; }
-.home-link:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 26px var(--shadow-strong); }
-.link-staff { background: linear-gradient(135deg, var(--staff-bg1), var(--staff-bg2)); color: var(--staff-text); border: 2px solid var(--staff-border); }
-.link-exam { background: linear-gradient(135deg, var(--exam-bg1), var(--exam-bg2)); color: var(--exam-text); border: 2px solid var(--exam-border); }
-
-.login-form {
-    max-width: 400px; width: 100%; margin: 20px auto;
-    background: var(--panel-bg);
-    color: var(--text);
-    padding: clamp(16px, 5vw, 22px); border-radius: 12px; display: none;
-    border: 2px solid var(--panel-border);
-    box-shadow: 0 10px 24px var(--shadow-soft);
-    animation: popIn 0.4s ease both;
-}
-.login-form h3 { color: var(--vermilion); margin-top: 0; }
-
-.panel { display: none; animation: fadeSlide 0.45s ease both; }
-@keyframes fadeSlide {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.stats { display: flex; gap: 10px; margin: 15px 0; flex-wrap: wrap; }
-.stat {
-    flex: 1 1 140px; color: #fff; padding: clamp(11px, 3.5vw, 15px); border-radius: 10px; text-align: center;
-    font-size: clamp(13px, 3.2vw, 16px); font-weight: 700;
-    box-shadow: 0 4px 12px var(--shadow-soft);
-    transition: transform 0.3s ease;
-}
-.stat:hover { transform: translateY(-3px); }
-.stat-today { background: linear-gradient(135deg, var(--stat-today-1), var(--stat-today-2)); }
-.stat-total { background: linear-gradient(135deg, var(--stat-total-1), var(--stat-total-2)); }
-.stat b { font-size: clamp(20px, 6vw, 28px); display: block; margin-top: 5px; }
-
+.top-datetime.date { font-size: 14px; font-weight: bold; }
+.top-datetime.time { font-size: 16px; font-weight: 900; letter-spacing: 1px; color: #FFFF00; }
+.login-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.box { padding: 30px; border-radius: 12px; text-align: center; cursor: pointer; font-size: 18px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s; }
+.box:hover { transform: translateY(-5px); }
+.box1 { background: linear-gradient(135deg, #E3F2FD, #BBDEFB); border: 3px solid #2196F3; }
+.box2 { background: linear-gradient(135deg, #E8F5E9, #C8E6C9); border: 3px solid #4CAF50; }
+.home-links { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+.home-link { padding: 25px; border-radius: 12px; text-align: center; text-decoration: none; font-size: 17px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: 0.3s; }
+.home-link:hover { transform: translateY(-3px); }
+.link-staff { background: linear-gradient(135deg, #E1BEE7, #CE93D8); color: #4A148C; border: 2px solid #AB47BC; }
+.link-exam { background: linear-gradient(135deg, #FFCCBC, #FFAB91); color: #BF360C; border: 2px solid #FF7043; }
+.login-form { max-width: 400px; margin: 20px auto; background: #f5f5f5; padding: 20px; border-radius: 10px; display: none; border: 2px solid #E91E63; }
+body.dark.login-form { background: #333; }
+.panel { display: none; }
+.stats { display: flex; gap: 10px; margin: 15px 0; }
+.stat { flex: 1; color: white; padding: 15px; border-radius: 8px; text-align: center; font-size: 16px; font-weight: bold; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
+.stat-today { background: linear-gradient(135deg, #00BCD4, #0097A7); }
+.stat-total { background: linear-gradient(135deg, #E91E63, #C2185B); }
+.stat b { font-size: 28px; display: block; margin-top: 5px; }
 .classes { display: flex; gap: 10px; margin: 15px 0; flex-wrap: wrap; }
-.cls {
-    flex: 1 1 auto; min-width: 76px; padding: clamp(10px, 3vw, 15px); color: #fff; border: none; border-radius: 10px;
-    font-weight: 700; cursor: pointer; font-size: clamp(12px, 3vw, 15px);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    box-shadow: 0 3px 8px var(--shadow-soft);
-}
-.cls:hover { transform: translateY(-3px); }
-.c9 { background: var(--c9); } .c10 { background: var(--c10); } .c11 { background: var(--c11); } .c12 { background: var(--c12); }
-.cls.active { border: 3px solid var(--text); transform: scale(1.05); box-shadow: 0 6px 16px var(--shadow-strong); }
-
-.admin-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 0; border-bottom: 3px solid var(--border); }
-.tab-btn {
-    padding: clamp(9px, 3vw, 12px) clamp(14px, 5vw, 25px); border: none; border-radius: 10px 10px 0 0; cursor: pointer;
-    font-weight: 700; font-size: clamp(12px, 3vw, 15px); color: #fff;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
-    opacity: 0.75;
-    flex: 1 1 auto;
-}
-.tab-dashboard { background: linear-gradient(100deg, var(--tab-dash-1), var(--tab-dash-2)); }
-.tab-settings { background: linear-gradient(100deg, var(--tab-set-1), var(--tab-set-2)); }
-.tab-btn.active { opacity: 1; transform: translateY(-3px); box-shadow: 0 6px 16px var(--shadow-strong); border-bottom: 4px solid #fff; }
-.tab-content { display: none; padding-top: 15px; }
-.tab-content.active { display: block; animation: fadeSlide 0.35s ease both; }
-
-.calendar { display: grid; grid-template-columns: repeat(7,1fr); gap: clamp(3px, 1vw, 5px); }
-.day {
-    padding: clamp(6px, 2.6vw, 12px) 2px; background: var(--day-bg); color: var(--day-text); text-align: center;
-    cursor: pointer; border-radius: 7px; font-weight: 700;
-    font-size: clamp(11px, 3vw, 14px);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    animation: dayIn 0.3s ease both;
-}
-.day:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 4px 10px var(--shadow-soft); }
-@keyframes dayIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-.day.has { background: var(--day-has-bg); color: var(--day-has-text); }
-.day.sun { background: var(--day-sun-bg); color: var(--day-sun-text); }
-.day.selected { background: var(--day-selected-bg); color: var(--day-selected-text); border: 3px solid var(--day-selected-border); }
-.week { background: var(--week-bg); color: var(--week-text); font-weight: 700; padding: clamp(5px, 2vw, 8px) 2px; border-radius: 6px; text-align: center; font-size: clamp(10px, 2.8vw, 14px); }
-
-input, button, textarea {
-    width: 100%; padding: 12px; margin: 8px 0;
-    border: 2px solid var(--input-border); border-radius: 8px; font-size: 16px;
-    background: var(--input-bg); color: var(--input-text);
-    font-family: 'Inter', sans-serif;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
-    min-height: 44px;
-}
-input:focus, textarea:focus { outline: none; border-color: var(--gold-deep); box-shadow: 0 0 0 3px rgba(232,163,61,0.25); }
-#user { font-weight: 700; font-size: 18px; }
-.small-btn { width: auto; padding: 8px 14px; font-size: 13px; display: inline-block; margin: 4px; min-height: 40px; }
-
-button {
-    background: linear-gradient(100deg, var(--btn-1), var(--btn-2));
-    color: var(--btn-text); border: none; cursor: pointer; font-weight: 700; border-radius: 8px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-    box-shadow: 0 4px 10px var(--shadow-soft);
-}
-button:hover { transform: translateY(-2px); filter: brightness(1.06); box-shadow: 0 6px 16px var(--shadow-strong); }
-button:active { transform: translateY(0); }
-
-.link {
-    background: var(--link-bg); color: var(--link-text);
-    padding: 10px; margin: 8px 0; border-left: 4px solid var(--link-border); border-radius: 6px;
-    animation: fadeSlide 0.3s ease both;
-    box-shadow: 0 2px 8px var(--shadow-soft);
-    font-size: clamp(13px, 3.2vw, 15px);
-    word-break: break-word;
-    overflow-wrap: anywhere;
-}
-.link a { color: var(--gold-deep); font-weight: 600; }
-
-.footer {
-    position: absolute; bottom: 0; left: 0; right: 0; text-align: center; padding: clamp(10px, 3vw, 15px);
-    background: var(--footer-bg); color: var(--footer-text); border-radius: 0 0 18px 18px;
-    font-size: clamp(11px, 2.8vw, 14px); letter-spacing: 0.5px;
-}
-
-/* buttons flagged with inline background overrides still get readable text via btn-text-safe */
-button[style*="background:#999"], button[style*="background: #999"] {
-    background: linear-gradient(100deg, var(--btn-muted-1), var(--btn-muted-2)) !important;
-    color: #fff !important;
-}
-button[style*="background:#f44336"], button[style*="background:red"] {
-    background: linear-gradient(100deg, var(--btn-danger-1), var(--btn-danger-2)) !important;
-    color: #fff !important;
-}
-
-/* Tablets and small laptops */
-@media (max-width: 768px) {
-    .container { border-radius: 12px; }
-    .stat b { font-size: clamp(18px, 5vw, 24px); }
-}
-
-/* Phones */
-@media (max-width: 600px) {
-    .login-grid, .home-links { grid-template-columns: 1fr; }
-    .tab-btn { flex: 1 1 40%; }
-}
-
-/* Small phones */
-@media (max-width: 400px) {
-    .header h1 { letter-spacing: 1px; }
-    .cls { min-width: 68px; }
-    .day { border-radius: 5px; }
-    .small-btn { padding: 8px 10px; font-size: 12px; }
-}
-
-/* Landscape phones: shorten vertical rhythm so content isn't cramped by URL bars */
-@media (max-height: 480px) and (orientation: landscape) {
-    .container { min-height: auto; }
-    .header { padding-top: 12px; padding-bottom: 18px; }
-}
-
-/* Larger desktop monitors: give the calendar and stats a little more room */
-@media (min-width: 900px) {
-    .day { border-radius: 9px; }
-}
+.cls { flex: 1; min-width: 100px; padding: 15px; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+.c9 { background: #FF9800; }.c10 { background: #2196F3; }.c11 { background: #4CAF50; }.c12 { background: #9C27B0; }
+.cls.active { border: 4px solid #000; transform: scale(1.05); }
+.admin-tabs { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 3px solid #ddd; }
+.tab-btn { padding: 12px 25px; border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
+.tab-dashboard { background: linear-gradient(90deg, #2196F3, #1976D2); color: white; }
+.tab-settings { background: linear-gradient(90deg, #FF9800, #F57C00); color: white; }
+.tab-btn.active { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); border-bottom: 4px solid #fff; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.calendar { display: grid; grid-template-columns: repeat(7,1fr); gap: 5px; }
+.day { padding: 12px; background: #f0f0f0; text-align: center; cursor: pointer; border-radius: 5px; font-weight: bold; }
+body.dark.day { background: #444; }
+.day.has { background: #4CAF50; color: white; }
+.day.sun { background: #FFCDD2; color: #C62828; }
+.day.selected { background: #2196F3; color: white; border: 3px solid #0D47A1; }
+.week { background: #E91E63; color: white; font-weight: bold; padding: 8px; border-radius: 5px; text-align: center; }
+input, button, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #ccc; border-radius: 5px; font-size: 16px; background: var(--card); color: var(--text); }
+#user { font-weight: bold; font-size: 18px; }
+.small-btn { width: auto; padding: 6px 12px; font-size: 14px; display: inline-block; }
+button { background: linear-gradient(90deg, #4CAF50, #45a049); color: white; border: none; cursor: pointer; font-weight: bold; border-radius: 8px; }
+.link { background: #FFF3E0; padding: 10px; margin: 5px 0; border-left: 4px solid #FF5722; border-radius: 5px; }
+body.dark.link { background: #3e2f1e; }
+.footer { position: absolute; bottom: 0; left: 0; right: 0; text-align: center; padding: 15px; background: #333; color: white; border-radius: 0 0 15px 15px; }
 </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <button class="dark-btn" onclick="toggleDark()" title="Toggle theme">🌙</button>
+        <button class="dark-btn" onclick="toggleDark()">🌙</button>
         <h1>KKDGMS</h1>
         <p>School Website Portal</p>
-    </div>
-    <div class="wave">
-        <svg viewBox="0 0 1200 40" preserveAspectRatio="none"><path d="M0,20 C 200,45 400,0 600,18 C 800,36 1000,4 1200,20 L1200,0 L0,0 Z"></path></svg>
     </div>
 
     <div class="top-datetime">
@@ -454,7 +86,7 @@ button[style*="background:#f44336"], button[style*="background:red"] {
     <div id="marquee" class="marquee"><span id="mtext"></span></div>
 
     <div id="home">
-        <h2 style="text-align:center; color:var(--vermilion);">Welcome</h2>
+        <h2 style="text-align:center; color:#E91E63;">Welcome</h2>
         <div class="login-grid">
             <div class="box box1" onclick="showLogin('admin')">👨‍💼<br>Admin Login</div>
             <div class="box box2" onclick="showLogin('student')">👨‍🎓<br>Student Login</div>
@@ -475,7 +107,7 @@ button[style*="background:#f44336"], button[style*="background:red"] {
     </div>
 
     <div id="admin" class="panel">
-        <h2 style="color:var(--tab-dash-1);">Admin Panel</h2>
+        <h2 style="color:#2196F3;">Admin Panel</h2>
         <div class="admin-tabs">
             <button class="tab-btn tab-dashboard active" onclick="openTab('dashboard')">📊 Dashboard</button>
             <button class="tab-btn tab-settings" onclick="openTab('settings')">⚙️ Settings</button>
@@ -521,7 +153,7 @@ button[style*="background:#f44336"], button[style*="background:red"] {
                 <button onclick="verifySecurity()">Verify</button>
             </div>
             <div id="passwordStep" style="display:none;">
-                <h4 style="color:#2E9A52;">✅ Verified! Change Password</h4>
+                <h4 style="color:green;">✅ Verified! Change Password</h4>
                 <input id="oldp" type="password" placeholder="Old Password">
                 <input id="newp" type="password" placeholder="New Password">
                 <button onclick="chgPass()">Update Password</button>
@@ -532,7 +164,7 @@ button[style*="background:#f44336"], button[style*="background:red"] {
     </div>
 
     <div id="student" class="panel">
-        <h2 style="color:var(--tab-set-1);">Student Panel</h2>
+        <h2 style="color:#4CAF50;">Student Panel</h2>
         <h3>Select Class</h3>
         <div class="classes">
             <button class="cls c9" id="sb9" onclick="sClass('class_9')">Class 9</button>
@@ -563,12 +195,11 @@ let sdt = '';
 let adt = '';
 const ADMIN_PHONE = '9047984396';
 
-window.onload = async function(){
+window.onload = function(){
     updateDateTime();
     setInterval(updateDateTime, 1000);
     loadDark();
-    updateViews();
-    await loadNote();
+    loadNote();
 }
 
 function updateDateTime(){
@@ -610,7 +241,7 @@ function backHome(){
     document.getElementById('user').value=''; document.getElementById('pass').value='';
 }
 
-async function doLogin(){
+function doLogin(){
     let t=document.getElementById('utype').value;
     let u=document.getElementById('user').value;
     let p=document.getElementById('pass').value;
@@ -618,13 +249,13 @@ async function doLogin(){
     if(t=='admin' && u=='kkdgms' && p==ap){
         document.getElementById('login').style.display='none';
         document.getElementById('admin').style.display='block';
-        await loadNote(); document.getElementById('note').value= await getNote();
-        await pickClass('class_9');
+        updateViews(); loadNote(); document.getElementById('note').value=getNote();
+        pickClass('class_9');
     }
     else if(t=='student' && u=='kkdgms' && p=='2027'){
         document.getElementById('login').style.display='none';
         document.getElementById('student').style.display='block';
-        await sClass('class_9');
+        sClass('class_9');
     }
     else{ alert('Login Failed!'); }
 }
@@ -669,14 +300,9 @@ function chgPass(){
     cancelPassChange();
 }
 
-async function getNote(){
-    try{
-        let r = await window.storage.get('notification', true);
-        return r ? r.value : '';
-    }catch(e){ return ''; }
-}
-async function loadNote(){
-    let n = await getNote();
+function getNote(){return localStorage.getItem('note')||'';}
+function loadNote(){
+    let n=getNote();
     if(n && n.trim()!=''){
         document.getElementById('mtext').innerText=n;
         document.getElementById('marquee').classList.add('show');
@@ -684,130 +310,104 @@ async function loadNote(){
         document.getElementById('marquee').classList.remove('show');
     }
 }
-async function saveNote(){
-    let n=document.getElementById('note').value;
-    try{
-        await window.storage.set('notification', n, true);
-        await loadNote();
-        alert('Saved — this will now show on every device.');
-    }catch(e){ alert('Failed to save. Please try again.'); }
-}
-async function clearNote(){
-    try{ await window.storage.delete('notification', true); }catch(e){}
-    document.getElementById('note').value='';
-    await loadNote();
-}
+function saveNote(){let n=document.getElementById('note').value; localStorage.setItem('note',n); loadNote(); alert('Saved');}
+function clearNote(){localStorage.removeItem('note'); document.getElementById('note').value=''; loadNote();}
 
-async function getD(){
-    try{
-        let r = await window.storage.get('class-links', true);
-        return r ? JSON.parse(r.value) : {};
-    }catch(e){ return {}; }
-}
-async function saveD(d){
-    try{
-        let ok = await window.storage.set('class-links', JSON.stringify(d), true);
-        if(!ok){ alert('Failed to save link. Please try again.'); }
-    }catch(e){ alert('Failed to save link. Please try again.'); }
-}
+function getD(){return JSON.parse(localStorage.getItem('data'))||{};}
+function saveD(d){localStorage.setItem('data',JSON.stringify(d));}
 
 function formatDate(dateStr){
     let parts = dateStr.split('-');
     return `${parts[2]}-${parts[1]}-${parts[0]}`;
 }
 
-async function pickClass(c){
+function pickClass(c){
     cls=c; adt='';
     ['9','10','11','12'].forEach(i=>document.getElementById('b'+i).classList.remove('active'));
     document.getElementById('b'+c.split('_')[1]).classList.add('active');
     document.getElementById('cname').innerText=c.replace('_',' ');
     document.getElementById('calDiv').style.display='block';
-    await makeCal();
+    makeCal();
 }
-async function makeCal(){
-    let cal=document.getElementById('cal'); cal.innerHTML='<div style="grid-column:1/-1; text-align:center; padding:10px;">Loading…</div>';
+function makeCal(){
+    let cal=document.getElementById('cal'); cal.innerHTML='';
     let mn=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     document.getElementById('my').innerText=mn[m]+' '+y;
-    let data = await getD();
-    let html='';
-    'Sun Mon Tue Wed Thu Fri Sat'.split(' ').forEach(d=>html+=`<div class="week">${d}</div>`);
-    let f=new Date(y,m,1).getDay(); let days=new Date(y,m+1,0).getDate();
-    for(let i=0;i<f;i++) html+='<div></div>';
+    'Sun Mon Tue Wed Thu Fri Sat'.split(' ').forEach(d=>cal.innerHTML+=`<div class="week">${d}</div>`);
+    let f=new Date(y,m,1).getDay(); let days=new Date(y,m+1,0).getDate(); let data=getD();
+    for(let i=0;i<f;i++) cal.innerHTML+='<div></div>';
     for(let i=1;i<=days;i++){
         let key=`${y}-${m+1}-${i}`;
         let c=data[cls]&&data[cls][key]?'has':'';
         let selected = (adt === key)? 'selected' : '';
         let sun=new Date(y,m,i).getDay()==0?'sun':'';
-        html+=`<div class="day ${c} ${selected} ${sun}" style="animation-delay:${i*0.01}s" onclick="pickDate(${i})">${i}</div>`;
+        cal.innerHTML+=`<div class="day ${c} ${selected} ${sun}" onclick="pickDate(${i})">${i}</div>`;
     }
-    cal.innerHTML = html;
 }
-async function pm(){m--; if(m<0){m=11;y--;} adt=''; await makeCal();}
-async function nm(){m++; if(m>11){m=0;y++;} adt=''; await makeCal();}
-async function pickDate(d){
+function pm(){m--; if(m<0){m=11;y--;} adt=''; makeCal();}
+function nm(){m++; if(m>11){m=0;y++;} adt=''; makeCal();}
+function pickDate(d){
     dt=`${y}-${m+1}-${d}`;
     adt = dt;
-    await makeCal();
+    makeCal();
     document.getElementById('d').innerText=formatDate(dt);
     document.getElementById('linkDiv').style.display='block';
-    await loadL();
+    loadL();
 }
 function backCal(){document.getElementById('linkDiv').style.display='none';}
 
-async function addL(){
+function addL(){
     let h=document.getElementById('ht').value; let u=document.getElementById('lu').value;
     if(!h){alert('Enter Topic');return;}
-    let data= await getD(); if(!data[cls]) data[cls]={}; if(!data[cls][dt]) data[cls][dt]=[];
-    data[cls][dt].push({h:h,u:u});
-    await saveD(data);
+    let data=getD(); if(!data[cls]) data[cls]={}; if(!data[cls][dt]) data[cls][dt]=[];
+    data[cls][dt].push({h:h,u:u}); saveD(data);
     document.getElementById('ht').value=''; document.getElementById('lu').value='';
-    await loadL(); await makeCal();
+    loadL(); makeCal();
 }
-async function loadL(){
-    let data= await getD(); let links=data[cls]?.[dt]||[]; let html='';
+function loadL(){
+    let data=getD(); let links=data[cls]?.[dt]||[]; let html='';
     links.forEach((l,i)=>{html+=`<div class="link">${i+1}. ${l.h}<br><a href="${l.u}" target="_blank">${l.u}</a> <button onclick="delL(${i})" style="float:right;background:red;padding:5px;width:auto;">X</button></div>`;});
     document.getElementById('llist').innerHTML=html||'No links';
 }
-async function delL(i){let data= await getD(); data[cls][dt].splice(i,1); await saveD(data); await loadL(); await makeCal();}
+function delL(i){let data=getD(); data[cls][dt].splice(i,1); saveD(data); loadL(); makeCal();}
 
-// STUDENT FUNCTIONS - read from the same shared data[scls][key]
-async function sClass(c){
+// FIXED STUDENT FUNCTIONS - NOW READS data[scls][key]
+function sClass(c){
     scls=c; sdt='';
     ['sb9','sb10','sb11','sb12'].forEach(i=>document.getElementById(i).classList.remove('active'));
     document.getElementById('sb'+c.split('_')[1]).classList.add('active');
     document.getElementById('scname').innerText=c.replace('_',' ');
     document.getElementById('scalDiv').style.display='block';
-    await makeSCal();
+    makeSCal();
 }
-async function makeSCal(){
-    let cal=document.getElementById('scal'); cal.innerHTML='<div style="grid-column:1/-1; text-align:center; padding:10px;">Loading…</div>';
+function makeSCal(){
+    let cal=document.getElementById('scal'); cal.innerHTML='';
     let mn=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     document.getElementById('smy').innerText=mn[sm]+' '+sy;
-    let data = await getD();
-    let html='';
-    'Sun Mon Tue Wed Thu Fri Sat'.split(' ').forEach(d=>html+=`<div class="week">${d}</div>`);
-    let f=new Date(sy,sm,1).getDay(); let days=new Date(sy,sm+1,0).getDate();
-    for(let i=0;i<f;i++) html+='<div></div>';
+    'Sun Mon Tue Wed Thu Fri Sat'.split(' ').forEach(d=>cal.innerHTML+=`<div class="week">${d}</div>`);
+    let f=new Date(sy,sm,1).getDay(); let days=new Date(sy,sm+1,0).getDate(); let data=getD();
+    for(let i=0;i<f;i++) cal.innerHTML+='<div></div>';
     for(let i=1;i<=days;i++){
         let key=`${sy}-${sm+1}-${i}`;
+        // FIX 1: Check data[scls][key]
         let c=data&&data[scls]&&data[scls][key]?'has':'';
         let selected = (sdt === key)? 'selected' : '';
         let sun=new Date(sy,sm,i).getDay()==0?'sun':'';
-        html+=`<div class="day ${c} ${selected} ${sun}" style="animation-delay:${i*0.01}s" onclick="showSL(${i})">${i}</div>`;
+        cal.innerHTML+=`<div class="day ${c} ${selected} ${sun}" onclick="showSL(${i})">${i}</div>`;
     }
-    cal.innerHTML = html;
 }
-async function spm(){sm--; if(sm<0){sm=11;sy--;} sdt=''; await makeSCal();}
-async function snm(){sm++; if(sm>11){sm=0;sy++;} sdt=''; await makeSCal();}
-async function showSL(d){
+function spm(){sm--; if(sm<0){sm=11;sy--;} sdt=''; makeSCal();}
+function snm(){sm++; if(sm>11){sm=0;sy++;} sdt=''; makeSCal();}
+function showSL(d){
     let key=`${sy}-${sm+1}-${d}`;
     sdt = key;
-    await makeSCal();
-    let data= await getD();
-    let links=data?.[scls]?.[key]||[];
+    makeSCal();
+    let data=getD();
+    // FIX 2: Read from data[scls][key]
+    let links=data?.[key]||[];
     let html=`<h4>Links for ${formatDate(key)}</h4>`;
     links.forEach(l=>{html+=`<div class="link"><b>${l.h}</b><br><a href="${l.u}" target="_blank">${l.u}</a></div>`;});
-    document.getElementById('slinks').innerHTML=html||'<div style="padding:10px; color:var(--text-soft);">No links for this date</div>';
+    document.getElementById('slinks').innerHTML=html||'<div style="padding:10px; color:#999;">No links for this date</div>';
 }
 </script>
 </body>
